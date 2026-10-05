@@ -14,7 +14,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(InvalidBookingException.class)
   protected ProblemDetail handleInvalidBookingException(final InvalidBookingException ex) {
-    final ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_IMPLEMENTED);
+    var problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+    problemDetail.setDetail(ex.getMessage());
+    return problemDetail;
+  }
+
+  @ExceptionHandler(BookingException.class)
+  protected ProblemDetail handleBookingException(final BookingException ex) {
+    var problemDetail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     problemDetail.setDetail(ex.getMessage());
     return problemDetail;
   }

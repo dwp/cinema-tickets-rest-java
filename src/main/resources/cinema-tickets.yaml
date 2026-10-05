@@ -39,7 +39,13 @@ paths:
         "400":
           description: Invalid request.
           content:
-            application/json:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+        "500":
+          description: Internal server error.
+          content:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/ProblemDetail"
 
@@ -82,12 +88,14 @@ components:
       properties:
         type:
           $ref: "#/components/schemas/TicketType"
-        count:
+        ticketCount:
           type: integer
           format: int64
-          minimum: 0
-          nullable: false
-          examples: [0, 1, 2]
+          minimum: 1
+          examples: [1, 2, 3]
+      required:
+        - type
+        - ticketCount
 
     Booking:
       type: object
@@ -97,16 +105,15 @@ components:
           type: integer
           format: int64
           minimum: 1
-          nullable: false
           examples: [1234, 6789]
-        tickets:
+        ticketRequests:
           type: array
-          nullable: false
+          minItems: 1
           items:
             $ref: "#/components/schemas/TicketRequest"
       required:
         - accountId
-        - tickets
+        - ticketRequests
 
     BookingConfirmation:
       type: object
@@ -116,20 +123,17 @@ components:
           type: integer
           format: int64
           minimum: 1
-          nullable: false
           examples: [1234, 6789]
         seatCount:
           type: integer
           format: int64
           minimum: 1
           maximum: 25
-          nullable: false
           examples: [1, 25]
         totalCost:
           type: number
           format: double
           minimum: 1
-          nullable: false
           examples: [25.99, 51.98]
       required:
         - accountId

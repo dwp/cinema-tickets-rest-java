@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <Match>
+        <and>
+            <Package name="uk.gov.dwp.engineering.recruitment.domain"/>
+        </and>
+        <and>
+            <not>
+                <Class name="uk.gov.dwp.engineering.recruitment.domain.BookingConfirmation.java"></Class>
+            </not>
+        </and>
+    </Match>
+</FindBugsFilter>
